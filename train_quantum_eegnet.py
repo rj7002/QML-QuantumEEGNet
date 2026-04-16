@@ -56,8 +56,8 @@ def main():
     # Synthetic data specific arguments
     parser.add_argument('--num_samples', type=int, default=1000,
                        help='Number of synthetic samples')
-    parser.add_argument('--num_classes', type=int, default=2,
-                       help='Number of classes for synthetic data')
+    parser.add_argument('--num_classes', type=int, default=4,
+                       help='Number of classes (4 for BCI, 2 for synthetic)')
     
     # Training arguments
     parser.add_argument('--epochs', type=int, default=50,
@@ -159,7 +159,9 @@ def main():
     if args.model == 'quantum':
         model = QuantumEEGNet(**model_params)
     else:
-        model = ClassicalEEGNet(**model_params)
+        classical_params = {k: v for k, v in model_params.items()
+                           if k not in ['n_qubits', 'n_layers']}
+        model = ClassicalEEGNet(**classical_params)
     
     print(f"Model info: {model.get_model_info()}")
     print(f"Total parameters: {model.count_parameters():,}")

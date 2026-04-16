@@ -222,9 +222,9 @@ class Trainer:
                 early_stopping_counter += 1
             
             # Early stopping
-            if early_stopping_counter >= patience:
-                print(f"Early stopping triggered after {epoch} epochs")
-                break
+            # if early_stopping_counter >= patience:
+            #     print(f"Early stopping triggered after {epoch} epochs")
+            #     break
         
         # Load best model for testing
         if self.best_model_state is not None:

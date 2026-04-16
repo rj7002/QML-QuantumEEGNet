@@ -214,8 +214,23 @@ class ClassicalEEGNet(nn.Module):
         # Global average pooling
         x = F.adaptive_avg_pool2d(x, (1, 1))
         x = x.view(x.size(0), -1)
-        
+
         # Final classification
         x = self.fc1(x)
-        
+
         return x
+
+    def get_model_info(self):
+        return {
+            "model_type": "ClassicalEEGNet",
+            "F1": self.F1,
+            "D": self.D,
+            "F2": self.F2,
+            "dropout_rate": self.dropout_rate,
+            "num_classes": self.num_classes,
+            "input_channels": self.input_channels,
+            "input_length": self.input_length,
+        }
+
+    def count_parameters(self):
+        return sum(p.numel() for p in self.parameters() if p.requires_grad)

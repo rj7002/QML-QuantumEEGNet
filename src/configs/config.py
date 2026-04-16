@@ -38,10 +38,10 @@ class Config:
             'num_classes': 4,
             'n_qubits': 4,
             'n_layers': 2,
-            'input_channels': 2,
-            'input_length': 128
+            'input_channels': 22,
+            'input_length': 438
         }
-        
+
         self.training_config = {
             'epochs': 100,
             'batch_size': 64,
@@ -142,8 +142,8 @@ def get_quantum_eegnet_config() -> Config:
             'num_classes': 4,
             'n_qubits': 4,
             'n_layers': 2,
-            'input_channels': 2,
-            'input_length': 128
+            'input_channels': 22,
+            'input_length': 438
         },
         'training_config': {
             'epochs': 100,
@@ -180,8 +180,8 @@ def get_classical_eegnet_config() -> Config:
             'F2': 16,
             'dropout_rate': 0.25,
             'num_classes': 4,
-            'input_channels': 2,
-            'input_length': 128
+            'input_channels': 22,
+            'input_length': 438
         },
         'training_config': {
             'epochs': 100,
