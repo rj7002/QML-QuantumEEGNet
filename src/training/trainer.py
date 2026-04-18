@@ -173,7 +173,7 @@ class Trainer:
         accuracy = 100. * correct / total
         
         # Calculate confusion matrix
-        num_classes = self.config.get('num_classes', 2)
+        num_classes = self.config.get('num_classes', max(max(all_targets), max(all_predictions)) + 1)
         confusion_matrix = np.zeros((num_classes, num_classes), dtype=int)
         for pred, target in zip(all_predictions, all_targets):
             confusion_matrix[target, pred] += 1

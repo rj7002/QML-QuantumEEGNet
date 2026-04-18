@@ -50,7 +50,7 @@ def main():
     # BCI dataset specific arguments
     parser.add_argument('--subject', type=int, default=1,
                        help='BCI subject number (1-9)')
-    parser.add_argument('--data_path', type=str, default='data',
+    parser.add_argument('--data_path', type=str, default='src/data',
                        help='Path to BCI dataset')
     
     # Synthetic data specific arguments
@@ -173,7 +173,7 @@ def main():
         train_loader=train_loader,
         valid_loader=valid_loader,
         test_loader=test_loader,
-        config=config.model_config
+        config=config.training_config
     )
     
     # Train model
