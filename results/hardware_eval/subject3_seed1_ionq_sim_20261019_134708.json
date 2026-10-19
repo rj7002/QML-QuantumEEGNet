@@ -1,0 +1,15 @@
+{
+  "run_dir": "/Users/ryan/QML-QuantumEEGNet/experiments/quantum_pooled_eegnet_bnci2014_001_20261015_031727_456rhxlq",
+  "subject": "3",
+  "seed": 1,
+  "backend": "ionq_sim",
+  "shots": 1000,
+  "trials": 8,
+  "circuits": 128,
+  "noise": "aria-1",
+  "accuracy": 87.5,
+  "exact_accuracy_same_trials": 87.5,
+  "saved_test_accuracy_all_trials": 84.02777777777777,
+  "prediction_agreement_with_exact": 100.0,
+  "mean_abs_expval_error": 0.029521224623461118
+}

@@ -4,8 +4,10 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 import numpy as np
 from typing import Dict, List, Optional, Tuple
+import copy
 import os
 import json
+import tempfile
 from datetime import datetime
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -72,12 +74,12 @@ class Trainer:
             raise ValueError(f"Unsupported optimizer: {optimizer_name}")
     
     def _create_experiment_dir(self) -> str:
-        """Create experiment directory for saving results."""
+        """Create a new, uniquely named experiment directory for saving results."""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         model_name = self.config.get('model_name', 'quantum_eegnet')
-        experiment_dir = os.path.join('experiments', f"{model_name}_{timestamp}")
-        os.makedirs(experiment_dir, exist_ok=True)
-        return experiment_dir
+        os.makedirs('experiments', exist_ok=True)
+        # mkdtemp adds a random suffix, so runs started in the same second never share a directory
+        return tempfile.mkdtemp(prefix=f"{model_name}_{timestamp}_", dir='experiments')
     
     def train_epoch(self) -> Tuple[float, float]:
         """
@@ -215,7 +217,7 @@ class Trainer:
             # Save best model
             if valid_acc > self.best_valid_accuracy:
                 self.best_valid_accuracy = valid_acc
-                self.best_model_state = self.model.state_dict().copy()
+                self.best_model_state = copy.deepcopy(self.model.state_dict())
                 early_stopping_counter = 0
                 print(f"New best validation accuracy: {valid_acc:.2f}%")
             else:

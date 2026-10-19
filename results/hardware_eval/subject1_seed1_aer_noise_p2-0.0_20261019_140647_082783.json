@@ -1,0 +1,19 @@
+{
+  "run_dir": "/Users/ryan/QML-QuantumEEGNet/experiments/quantum_pooled_eegnet_bnci2014_001_20261015_031137_kvptyo8u",
+  "subject": "1",
+  "seed": 1,
+  "backend": "aer_noise",
+  "shots": 1000,
+  "trials": 288,
+  "circuits": 4608,
+  "noise": {
+    "p1": 0.0,
+    "p2": 0.0,
+    "readout": 0.0
+  },
+  "accuracy": 72.56944444444444,
+  "exact_accuracy_same_trials": 72.91666666666666,
+  "saved_test_accuracy_all_trials": 72.91666666666667,
+  "prediction_agreement_with_exact": 98.95833333333334,
+  "mean_abs_expval_error": 0.019274375555865884
+}
