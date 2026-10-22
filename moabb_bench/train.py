@@ -20,6 +20,7 @@ import torch
 from src import QuantumEEGNet, ClassicalEEGNet, Trainer
 from loader import MOABBDataset, SUPPORTED_DATASETS
 from quantum_variants import PooledQuantumEEGNet
+from ablations import ABLATIONS, build_ablation
 
 
 def get_device(device_config: str) -> torch.device:
@@ -35,8 +36,9 @@ def main():
                         choices=list(SUPPORTED_DATASETS.keys()),
                         help='MOABB dataset to train on')
     parser.add_argument('--model', type=str, default='quantum',
-                        choices=['quantum', 'quantum_pooled', 'classical'],
-                        help='quantum: original QEEGNet; quantum_pooled: circuit sees the whole trial')
+                        choices=['quantum', 'quantum_pooled', 'classical', *ABLATIONS],
+                        help='quantum: original QEEGNet; quantum_pooled: circuit sees the whole trial; '
+                             'ablate_*: quantum_pooled with the circuit swapped out (see ablations.py)')
     parser.add_argument('--subjects', type=str, default=None,
                         help='Comma-separated subject numbers (default: all subjects in the dataset)')
 
@@ -98,13 +100,15 @@ def main():
     print(f"\nCreating {args.model} model "
           f"(channels={input_channels}, length={input_length}, classes={num_classes})...")
 
-    if args.model in ('quantum', 'quantum_pooled'):
+    if args.model in ('quantum', 'quantum_pooled', *ABLATIONS):
         model_kwargs = dict(
             num_classes=num_classes, n_qubits=args.n_qubits, n_layers=args.n_layers,
             input_channels=input_channels, input_length=input_length, dropout_rate=args.dropout
         )
         if args.model == 'quantum':
             model = QuantumEEGNet(**model_kwargs)
+        elif args.model in ABLATIONS:
+            model = build_ablation(args.model, **model_kwargs)
         else:
             model = PooledQuantumEEGNet(reupload=args.reupload, rotations=args.rotations, **model_kwargs)
     else:
